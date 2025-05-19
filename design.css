@@ -1,0 +1,145 @@
+
+/* Custom styles to complement Tailwind CSS */
+
+/* Common styles */
+.section-title {
+    @apply text-3xl md:text-4xl font-bold text-center mb-4 relative;
+    color: #fff;
+}
+
+.section-title::after {
+    content: '';
+    @apply block h-1 w-24 mx-auto mt-4 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500;
+}
+
+/* Navigation */
+.nav-link {
+    @apply text-gray-300 hover:text-indigo-400 transition-colors duration-300 font-medium;
+}
+
+/* Buttons */
+.btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors duration-300 transform hover:scale-105;
+}
+
+.btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-transparent hover:bg-gray-700 text-gray-200 font-medium rounded-lg border border-gray-600 transition-colors duration-300 transform hover:scale-105;
+}
+
+/* Social Media Icons */
+.social-icon {
+    @apply flex items-center justify-center w-12 h-12 rounded-full bg-gray-800 hover:bg-indigo-600 text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110 text-xl;
+}
+
+.social-icon-alt {
+    @apply flex items-center justify-center w-10 h-10 rounded-full bg-gray-700 hover:bg-indigo-600 text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110 text-lg;
+}
+
+/* Skills */
+.skill-category {
+    @apply bg-gray-800 rounded-xl p-8 shadow-lg transition-all duration-300 hover:shadow-2xl hover:transform hover:-translate-y-2;
+}
+
+.skill-icon {
+    @apply flex items-center justify-center w-16 h-16 rounded-full mb-6 text-white text-2xl mx-auto;
+}
+
+.skill-bar {
+    @apply w-full h-2 bg-gray-700 rounded-full overflow-hidden;
+}
+
+.skill-progress {
+    @apply h-full rounded-full transition-all duration-1000 ease-out;
+}
+
+/* Projects */
+.project-card {
+    @apply bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:transform hover:-translate-y-2;
+}
+
+.project-img {
+    @apply relative overflow-hidden;
+}
+
+.project-img img {
+    @apply w-full h-64 object-cover transition-transform duration-500;
+}
+
+.project-overlay {
+    @apply absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 transition-opacity duration-300;
+}
+
+.project-card:hover .project-overlay {
+    @apply opacity-100;
+}
+
+.project-card:hover .project-img img {
+    transform: scale(1.1);
+}
+
+.project-link {
+    @apply flex items-center justify-center w-12 h-12 rounded-full bg-gray-800 hover:bg-indigo-600 text-white transition-all duration-300 transform hover:scale-110 text-lg;
+}
+
+.tech-tag {
+    @apply px-3 py-1 text-xs font-medium bg-gray-700 text-indigo-300 rounded-full;
+}
+
+/* Contact Form */
+.contact-form {
+    @apply bg-gray-800 rounded-xl p-8 shadow-lg;
+}
+
+.form-input {
+    @apply w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300;
+}
+
+.contact-icon {
+    @apply flex items-center justify-center w-12 h-12 rounded-full bg-indigo-600/20 text-indigo-400 text-lg mr-4;
+}
+
+/* Animation Styles */
+.scroll-down-btn {
+    @apply flex items-center justify-center w-12 h-12 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition-all duration-300 transform hover:scale-110 text-lg animate-bounce;
+}
+
+/* Coding Animation Background */
+.coding-animation {
+    @apply w-full h-full bg-gray-900 opacity-80;
+    background-image: 
+        linear-gradient(to right, rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: animateGrid 20s linear infinite;
+}
+
+@keyframes animateGrid {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 20px 20px;
+    }
+}
+
+/* Mobile Menu Animation */
+#mobile-menu {
+    transition: max-height 0.3s ease-out;
+    max-height: 0;
+    overflow: hidden;
+}
+
+#mobile-menu.active {
+    max-height: 300px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-title::after {
+        @apply mt-2;
+    }
+    
+    .project-img img {
+        @apply h-48;
+    }
+}

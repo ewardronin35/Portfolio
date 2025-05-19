@@ -1,0 +1,89 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $password = $_POST['password'] ?? '';
+    if (!empty($password)) {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        echo json_encode(['hash' => $hash]);
+        exit;
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Password Hash</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #0a192f;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .hash-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="hash-card">
+                    <h2 class="text-center mb-4">Generate Password Hash</h2>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i> Delete this file after generating your hash!
+                    </div>
+                    <form id="hashForm">
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Enter Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Generate Hash</button>
+                    </form>
+                    <div id="result" class="mt-4" style="display: none;">
+                        <label class="form-label">Generated Hash:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="hashResult" readonly>
+                            <button class="btn btn-secondary" type="button" onclick="copyHash()">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#hashForm').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: 'generate_hash.php',
+                    data: { password: $('#password').val() },
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#hashResult').val(response.hash);
+                        $('#result').show();
+                    }
+                });
+            });
+        });
+
+        function copyHash() {
+            const hashInput = document.getElementById('hashResult');
+            hashInput.select();
+            document.execCommand('copy');
+            alert('Hash copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
