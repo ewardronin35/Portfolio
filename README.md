@@ -22,25 +22,8 @@ This is a **Personal Portfolio Website** built using basic **PHP**, **HTML**, **
 - **Bootstrap 5**
 - **Icons8** for icons
 
-## 📂 Folder Structure
-
-📁 portfolio/
-├── 📁 assets/
-│ ├── 📁 css/
-│ ├── 📁 js/
-│ ├── 📁 images/
-├── 📁 includes/
-│ ├── header.php
-│ ├── footer.php
-├── index.php
-├── about.php
-├── contact.php
-└── README.md
 
 
-## 🖼️ Screenshots
-
-> You can insert some screenshots of your project here to visually showcase it.
 
 ## ⚙️ How to Use
 
