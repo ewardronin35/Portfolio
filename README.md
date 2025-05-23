@@ -66,9 +66,6 @@ http://localhost:8000
 📫 Contact
 Want to get in touch?
 
-Email: your-email@example.com
+Email: eduardroland20@gmail.com
 
-Portfolio: yourdomain.com
-
-GitHub: @yourusername
 
