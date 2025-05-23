@@ -1,0 +1,88 @@
+{
+  "projects": [
+    {
+      "name": "Research System",
+      "image": "projects/research-system.png",
+      "description": "A comprehensive research management system for tracking and managing academic research papers",
+      "technologies": ["PHP", "MySQL", "jQuery", "Bootstrap", "AJAX"],
+      "github": "ewardronin35/Research-System",
+      "demoLink": "#",
+      "features": [
+        "Research paper tracking",
+        "Document management",
+        "User collaboration",
+        "Search functionality"
+      ]
+    },
+    {
+      "name": "CHED-eTrack",
+      "image": "projects/ched-etrack.png",
+      "description": "A comprehensive document management system for CHED Region IX with Gmail-like interface for internal communications",
+      "technologies": ["PHP", "Laravel", "MySQL", "JavaScript", "Bootstrap"],
+      "github": "ewardronin35/CHED-eTrack",
+      "demoLink": "#",
+      "features": [
+        "Document tracking system",
+        "Real-time notifications",
+        "Email integration",
+        "User management"
+      ]
+    },
+    {
+      "name": "PilarCare",
+      "image": "projects/pilarcare.png",
+      "description": "Web-Based Clinic Management System for Pilar College of Zamboanga City",
+      "technologies": ["PHP", "MySQL", "jQuery", "Bootstrap", "AJAX"],
+      "github": "ewardronin35/PilarCare",
+      "demoLink": "#",
+      "features": [
+        "Patient records management",
+        "Appointment scheduling",
+        "Medical history tracking",
+        "Inventory management"
+      ]
+    },
+    {
+      "name": "Registrar Monitoring System",
+      "image": "projects/registrar-monitoring.png",
+      "description": "A web-based system for monitoring and managing registrar activities and student records",
+      "technologies": ["PHP", "MySQL", "jQuery", "Bootstrap", "AJAX"],
+      "github": "ewardronin35/Registrar-Monitoring-System",
+      "demoLink": "#",
+      "features": [
+        "Student records management",
+        "Course registration",
+        "Grade management",
+        "Document processing"
+      ]
+    },
+    {
+      "name": "Portfolio CMS",
+      "image": "projects/portfolio-cms.png",
+      "description": "A dynamic portfolio website with content management system capabilities",
+      "technologies": ["PHP", "MySQL", "JavaScript", "Bootstrap", "jQuery"],
+      "github": "ewardronin35/Portfolio-with-Content-Management-",
+      "demoLink": "#",
+      "features": [
+        "Content management",
+        "Dynamic portfolio sections",
+        "Admin dashboard",
+        "Project showcase"
+      ]
+    },
+    {
+      "name": "Alert & Lost Found System",
+      "image": "projects/alert-system.png",
+      "description": "Alert and Lost & Found Notification System for Pilar College of Zamboanga City",
+      "technologies": ["PHP", "MySQL", "Bootstrap", "jQuery", "AJAX"],
+      "github": "ewardronin35/Alert-and-Lost-Found-Notification-in-PCZC",
+      "demoLink": "#",
+      "features": [
+        "Real-time alerts",
+        "Lost item reporting",
+        "Item matching system",
+        "Notification management"
+      ]
+    }
+  ]
+}
