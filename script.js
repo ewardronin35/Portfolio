@@ -6,19 +6,43 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Custom cursor
-    const cursor = document.querySelector('.cursor');
+       const cursor = document.querySelector('.cursor');
     const cursorFollower = document.querySelector('.cursor-follower');
+    
+    // Check if device is not mobile/tablet
+    function isDesktop() {
+        return window.innerWidth > 768 && !('ontouchstart' in window);
+    }
 
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        
-        setTimeout(() => {
-            cursorFollower.style.left = e.clientX + 'px';
-            cursorFollower.style.top = e.clientY + 'px';
-        }, 100);
-    });
+    // Initialize cursor
+    function initCursor() {
+        if (isDesktop()) {
+            // Show cursors
+            if (cursor) cursor.style.display = 'block';
+            if (cursorFollower) cursorFollower.style.display = 'block';
+            
+            // Add mouse move event
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                setTimeout(() => {
+                    cursorFollower.style.left = e.clientX + 'px';
+                    cursorFollower.style.top = e.clientY + 'px';
+                }, 100);
+            });
+        } else {
+            // Hide cursors on mobile
+            if (cursor) cursor.style.display = 'none';
+            if (cursorFollower) cursorFollower.style.display = 'none';
+        }
+    }
 
+    // Initialize cursor
+    initCursor();
+
+    // Re-initialize on window resize
+    window.addEventListener('resize', initCursor);
     // Preloader
     window.addEventListener('load', () => {
         document.querySelector('#preloader').style.display = 'none';
