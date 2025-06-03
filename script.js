@@ -316,3 +316,25 @@ function updateThemeIcon(theme) {
     const icon = themeToggle.querySelector('i');
     icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 }
+function checkTime() {
+    const hour = new Date().getHours();
+    // Light theme between 6 AM and 5 PM (17:00)
+    const shouldBeLightTheme = hour >= 6 && hour < 17;
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    
+    if (shouldBeLightTheme && currentTheme !== 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        updateThemeIcon('light');
+    } else if (!shouldBeLightTheme && currentTheme !== 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        updateThemeIcon('dark');
+    }
+}
+
+// Check time on page load
+checkTime();
+
+// Check time every minute
+setInterval(checkTime, 60000);
