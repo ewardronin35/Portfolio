@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize AOS
-   AOS.init({
+
+AOS.init({
     duration: 800,
     easing: 'ease-out-cubic',
     once: true,
     offset: 50,
-    disable: 'mobile'
+    // Remove the 'disable: mobile' setting
+    mirror: true,
+    anchorPlacement: 'top-bottom',
 });
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -22,6 +25,85 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 const navLinks = document.querySelectorAll('.nav-link');
 const navbarCollapse = document.querySelector('.navbar-collapse');
+// Add to existing code
+const mobileMenu = {
+    init() {
+        const hamburger = document.querySelector('.navbar-toggler');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('is-active');
+            
+            // Add smooth animation
+            if (navbarCollapse.classList.contains('show')) {
+                navbarCollapse.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => {
+                    navbarCollapse.classList.remove('show');
+                    navbarCollapse.style.animation = '';
+                }, 300);
+            } else {
+                navbarCollapse.classList.add('show');
+                navbarCollapse.style.animation = 'slideIn 0.3s ease forwards';
+            }
+        });
+
+        // Close menu on scroll
+        window.addEventListener('scroll', () => {
+            if (navbarCollapse.classList.contains('show')) {
+                hamburger.click();
+            }
+        });
+    }
+};
+
+mobileMenu.init();
+const mobileOptimizations = {
+    init() {
+        if (window.innerWidth <= 768) {
+            // Defer non-critical resources
+            this.deferImages();
+            this.optimizeAnimations();
+            this.addPullToRefresh();
+        }
+    },
+
+    deferImages() {
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+    },
+
+    optimizeAnimations() {
+        // Use requestAnimationFrame for smooth animations
+        const animatedElements = document.querySelectorAll('.animated-element');
+        
+        const animate = () => {
+            animatedElements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    element.classList.add('animate');
+                }
+            });
+            requestAnimationFrame(animate);
+        };
+
+        requestAnimationFrame(animate);
+    },
+
+    addPullToRefresh() {
+        // Add pull-to-refresh functionality if needed
+    }
+};
+    mobileOptimizations.init();
 
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
@@ -69,9 +151,16 @@ navLinks.forEach(link => {
     // Re-initialize on window resize
     window.addEventListener('resize', initCursor);
     // Preloader
-    window.addEventListener('load', () => {
-        document.querySelector('#preloader').style.display = 'none';
-    });
+// Replace the existing preloader code
+window.addEventListener('load', () => {
+    const preloader = document.querySelector('#preloader');
+    preloader.style.opacity = '0';
+    preloader.style.transition = 'opacity 0.5s ease';
+    
+    setTimeout(() => {
+        preloader.style.display = 'none';
+    }, 500);
+});
 
     // Typing animation
     new Typed('.typed-text', {
