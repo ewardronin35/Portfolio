@@ -2172,3 +2172,26 @@ body,
     z-index: 9999;
     transition: width 0.1s ease;
 }
+/* Add these styles to improve mobile menu behavior */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        transition: all 0.3s ease;
+    }
+
+    .navbar-toggler {
+        z-index: 1050;
+    }
+
+    .navbar-collapse.collapsing {
+        height: auto;
+    }
+
+    .navbar-collapse.show {
+        height: auto;
+    }
+    
+    /* Prevent content scrolling when menu is open */
+    body.menu-open {
+        overflow: hidden;
+    }
+}

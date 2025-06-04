@@ -25,26 +25,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 const navLinks = document.querySelectorAll('.nav-link');
 const navbarCollapse = document.querySelector('.navbar-collapse');
-// Add to existing code
+
+
+// Mobile menu functionality
+
+
 const mobileMenu = {
     init() {
         const hamburger = document.querySelector('.navbar-toggler');
         const navbarCollapse = document.querySelector('.navbar-collapse');
+        const navLinks = document.querySelectorAll('.nav-link');
         
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('is-active');
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const isNavbarCollapse = e.target.closest('.navbar-collapse');
+            const isHamburger = e.target.closest('.navbar-toggler');
             
-            // Add smooth animation
-            if (navbarCollapse.classList.contains('show')) {
-                navbarCollapse.style.animation = 'slideOut 0.3s ease forwards';
-                setTimeout(() => {
-                    navbarCollapse.classList.remove('show');
-                    navbarCollapse.style.animation = '';
-                }, 300);
-            } else {
-                navbarCollapse.classList.add('show');
-                navbarCollapse.style.animation = 'slideIn 0.3s ease forwards';
+            if (!isNavbarCollapse && !isHamburger && navbarCollapse.classList.contains('show')) {
+                hamburger.click();
             }
+        });
+
+        // Close menu when clicking nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navbarCollapse.classList.contains('show')) {
+                    hamburger.click();
+                }
+            });
         });
 
         // Close menu on scroll
@@ -53,9 +61,18 @@ const mobileMenu = {
                 hamburger.click();
             }
         });
+
+        // Add touch event handling for mobile
+        document.addEventListener('touchstart', (e) => {
+            const isNavbarCollapse = e.target.closest('.navbar-collapse');
+            const isHamburger = e.target.closest('.navbar-toggler');
+            
+            if (!isNavbarCollapse && !isHamburger && navbarCollapse.classList.contains('show')) {
+                hamburger.click();
+            }
+        });
     }
 };
-
 mobileMenu.init();
 const mobileOptimizations = {
     init() {
