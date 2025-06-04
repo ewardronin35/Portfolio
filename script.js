@@ -29,50 +29,79 @@ const navbarCollapse = document.querySelector('.navbar-collapse');
 
 // Mobile menu functionality
 
-
+// Update the mobileMenu initialization
 const mobileMenu = {
     init() {
         const hamburger = document.querySelector('.navbar-toggler');
         const navbarCollapse = document.querySelector('.navbar-collapse');
         const navLinks = document.querySelectorAll('.nav-link');
         
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const isNavbarCollapse = e.target.closest('.navbar-collapse');
-            const isHamburger = e.target.closest('.navbar-toggler');
-            
-            if (!isNavbarCollapse && !isHamburger && navbarCollapse.classList.contains('show')) {
-                hamburger.click();
+        hamburger.addEventListener('click', () => {
+            // Add animation classes
+            if (navbarCollapse.classList.contains('show')) {
+                // Closing animation
+                navbarCollapse.style.height = navbarCollapse.scrollHeight + 'px';
+                setTimeout(() => {
+                    navbarCollapse.style.height = '0px';
+                    navbarCollapse.style.opacity = '0';
+                    navbarCollapse.style.transform = 'translateY(-10px)';
+                }, 0);
+            } else {
+                // Opening animation
+                navbarCollapse.style.height = navbarCollapse.scrollHeight + 'px';
+                navbarCollapse.style.opacity = '1';
+                navbarCollapse.style.transform = 'translateY(0)';
             }
         });
 
-        // Close menu when clicking nav links
+        // Close menu when clicking links
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 if (navbarCollapse.classList.contains('show')) {
-                    hamburger.click();
+                    // Trigger the close animation
+                    navbarCollapse.style.height = '0px';
+                    navbarCollapse.style.opacity = '0';
+                    navbarCollapse.style.transform = 'translateY(-10px)';
+                    // Allow time for animation before closing
+                    setTimeout(() => {
+                        hamburger.click();
+                    }, 300);
                 }
             });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navbarCollapse.contains(e.target) && 
+                !hamburger.contains(e.target) && 
+                navbarCollapse.classList.contains('show')) {
+                // Trigger the close animation
+                navbarCollapse.style.height = '0px';
+                navbarCollapse.style.opacity = '0';
+                navbarCollapse.style.transform = 'translateY(-10px)';
+                // Allow time for animation before closing
+                setTimeout(() => {
+                    hamburger.click();
+                }, 300);
+            }
         });
 
         // Close menu on scroll
         window.addEventListener('scroll', () => {
             if (navbarCollapse.classList.contains('show')) {
-                hamburger.click();
-            }
-        });
-
-        // Add touch event handling for mobile
-        document.addEventListener('touchstart', (e) => {
-            const isNavbarCollapse = e.target.closest('.navbar-collapse');
-            const isHamburger = e.target.closest('.navbar-toggler');
-            
-            if (!isNavbarCollapse && !isHamburger && navbarCollapse.classList.contains('show')) {
-                hamburger.click();
+                // Trigger the close animation
+                navbarCollapse.style.height = '0px';
+                navbarCollapse.style.opacity = '0';
+                navbarCollapse.style.transform = 'translateY(-10px)';
+                // Allow time for animation before closing
+                setTimeout(() => {
+                    hamburger.click();
+                }, 300);
             }
         });
     }
 };
+
 mobileMenu.init();
 const mobileOptimizations = {
     init() {

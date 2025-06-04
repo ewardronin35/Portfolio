@@ -2195,3 +2195,46 @@ body,
         overflow: hidden;
     }
 }
+/* Mobile Navbar Animations */
+.navbar-collapse {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.navbar-collapse.collapsing {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.navbar-collapse.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.navbar-collapse:not(.show) {
+    display: block;
+    height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: height 0s 0.3s, opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Add animation to nav items */
+.navbar-collapse .nav-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-collapse.show .nav-item {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Stagger the animation of nav items */
+.navbar-collapse.show .nav-item:nth-child(1) { transition-delay: 0.1s; }
+.navbar-collapse.show .nav-item:nth-child(2) { transition-delay: 0.2s; }
+.navbar-collapse.show .nav-item:nth-child(3) { transition-delay: 0.3s; }
+.navbar-collapse.show .nav-item:nth-child(4) { transition-delay: 0.4s; }
+.navbar-collapse.show .nav-item:nth-child(5) { transition-delay: 0.5s; }
+.navbar-collapse.show .nav-item:nth-child(6) { transition-delay: 0.6s; }
+.navbar-collapse.show .nav-item:nth-child(7) { transition-delay: 0.7s; }
