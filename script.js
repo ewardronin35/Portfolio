@@ -233,9 +233,7 @@ function createProjectCard(project) {
                     <img src="${project.image}" alt="${project.name}" class="img-fluid">
                     <div class="project-overlay">
                         <div class="project-actions">
-                            <a href="${project.demoLink}" class="btn btn-gradient me-2" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
+                            
                             <a href="https://github.com/${project.github}" class="btn btn-outline" target="_blank">
                                 <i class="fab fa-github"></i> Source Code
                             </a>
