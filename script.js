@@ -6,7 +6,7 @@ AOS.init({
     easing: 'ease-out-cubic',
     once: true,
     offset: 50,
-    // Remove the 'disable: mobile' setting
+    
     mirror: true,
     anchorPlacement: 'top-bottom',
 });
@@ -138,35 +138,7 @@ navLinks.forEach(link => {
         return window.innerWidth > 768 && !('ontouchstart' in window);
     }
 
-    // Initialize cursor
-    function initCursor() {
-        if (isDesktop()) {
-            // Show cursors
-            if (cursor) cursor.style.display = 'block';
-            if (cursorFollower) cursorFollower.style.display = 'block';
-            
-            // Add mouse move event
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                
-                setTimeout(() => {
-                    cursorFollower.style.left = e.clientX + 'px';
-                    cursorFollower.style.top = e.clientY + 'px';
-                }, 100);
-            });
-        } else {
-            // Hide cursors on mobile
-            if (cursor) cursor.style.display = 'none';
-            if (cursorFollower) cursorFollower.style.display = 'none';
-        }
-    }
-
-    // Initialize cursor
-    initCursor();
-
-    // Re-initialize on window resize
-    window.addEventListener('resize', initCursor);
+ 
     // Preloader
 // Replace the existing preloader code
 window.addEventListener('load', () => {
@@ -192,17 +164,20 @@ window.addEventListener('load', () => {
         backDelay: 1000,
         loop: true
     });
-async function fetchProjects() {
+
+
+    async function fetchProjects() {
     try {
         const response = await fetch('projects.json');
         const data = await response.json();
         const projectsContainer = document.querySelector('#projects .row');
         projectsContainer.innerHTML = '';
 
-        // Filter priority projects (PilarCare and CHED-eTrack)
+        // Filter priority projects (Research System, PilarCare, and CHED-eTrack)
         const priorityProjects = data.projects.filter(project =>
             project.name.toLowerCase().includes('pilarcare') ||
-            project.name.toLowerCase().includes('ched-e')
+            project.name.toLowerCase().includes('ched-etrack') ||
+            project.name.toLowerCase().includes('research system')
         );
 
         // Show priority projects with images
@@ -213,14 +188,15 @@ async function fetchProjects() {
         // Filter other projects
         const otherProjects = data.projects.filter(project => 
             !project.name.toLowerCase().includes('pilarcare') &&
-            !project.name.toLowerCase().includes('ched-e')
+            !project.name.toLowerCase().includes('ched-etrack') &&
+            !project.name.toLowerCase().includes('research system')
         );
 
         // Create container for other projects (initially hidden)
         if (otherProjects.length > 0) {
             const otherProjectsContainer = document.createElement('div');
             otherProjectsContainer.id = 'other-projects';
-            otherProjectsContainer.className = 'col-12';
+            otherProjectsContainer.className = 'row g-4'; // Use row and g-4 for consistent spacing
             otherProjectsContainer.style.display = 'none';
 
             // Add other projects without images
@@ -232,29 +208,33 @@ async function fetchProjects() {
 
             // Add "Show More Projects" button
             const showMoreBtn = document.createElement('button');
-            showMoreBtn.className = 'btn btn-gradient mt-4 mx-auto d-block col-12';
+            showMoreBtn.className = 'btn btn-gradient mt-4 mx-auto d-block';
             showMoreBtn.textContent = 'Show More Projects';
             showMoreBtn.onclick = function() {
-                const otherProjects = document.getElementById('other-projects');
-                if (otherProjects.style.display === 'none') {
-                    otherProjects.style.display = 'block';
+                const otherProjectsEl = document.getElementById('other-projects');
+                if (otherProjectsEl.style.display === 'none') {
+                    otherProjectsEl.style.display = 'flex'; // Use flex for row behavior
                     showMoreBtn.textContent = 'Show Less Projects';
                     // Add fade-in animation
-                    otherProjects.style.opacity = '0';
+                    otherProjectsEl.style.opacity = '0';
                     setTimeout(() => {
-                        otherProjects.style.transition = 'opacity 0.3s ease';
-                        otherProjects.style.opacity = '1';
+                        otherProjectsEl.style.transition = 'opacity 0.3s ease';
+                        otherProjectsEl.style.opacity = '1';
                     }, 10);
                 } else {
                     // Add fade-out animation
-                    otherProjects.style.opacity = '0';
+                    otherProjectsEl.style.opacity = '0';
                     setTimeout(() => {
-                        otherProjects.style.display = 'none';
+                        otherProjectsEl.style.display = 'none';
                         showMoreBtn.textContent = 'Show More Projects';
                     }, 300);
                 }
             };
-            projectsContainer.appendChild(showMoreBtn);
+             // Append button to the main container, not inside the other projects div
+            const buttonContainer = document.createElement('div');
+            buttonContainer.className = 'col-12 text-center';
+            buttonContainer.appendChild(showMoreBtn);
+            projectsContainer.appendChild(buttonContainer);
         }
 
         // Initialize AOS for new elements
@@ -323,8 +303,6 @@ function createProjectCard(project, showImage = true) {
         </div>
     `;
 }
-
-
     fetchProjects();
 
     // Scroll animations
