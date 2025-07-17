@@ -192,21 +192,74 @@ window.addEventListener('load', () => {
         backDelay: 1000,
         loop: true
     });
-
- async function fetchProjects() {
+async function fetchProjects() {
     try {
         const response = await fetch('projects.json');
         const data = await response.json();
         const projectsContainer = document.querySelector('#projects .row');
         projectsContainer.innerHTML = '';
-        
-        data.projects.forEach(project => {
-            const card = createProjectCard(project);
-            projectsContainer.innerHTML += card;
+
+        // Filter priority projects (PilarCare and CHED-eTrack)
+        const priorityProjects = data.projects.filter(project =>
+            project.name.toLowerCase().includes('pilarcare') ||
+            project.name.toLowerCase().includes('ched-e')
+        );
+
+        // Show priority projects with images
+        priorityProjects.forEach(project => {
+            projectsContainer.innerHTML += createProjectCard(project, true);
         });
+
+        // Filter other projects
+        const otherProjects = data.projects.filter(project => 
+            !project.name.toLowerCase().includes('pilarcare') &&
+            !project.name.toLowerCase().includes('ched-e')
+        );
+
+        // Create container for other projects (initially hidden)
+        if (otherProjects.length > 0) {
+            const otherProjectsContainer = document.createElement('div');
+            otherProjectsContainer.id = 'other-projects';
+            otherProjectsContainer.className = 'col-12';
+            otherProjectsContainer.style.display = 'none';
+
+            // Add other projects without images
+            otherProjects.forEach(project => {
+                otherProjectsContainer.innerHTML += createProjectCard(project, false);
+            });
+
+            projectsContainer.appendChild(otherProjectsContainer);
+
+            // Add "Show More Projects" button
+            const showMoreBtn = document.createElement('button');
+            showMoreBtn.className = 'btn btn-gradient mt-4 mx-auto d-block col-12';
+            showMoreBtn.textContent = 'Show More Projects';
+            showMoreBtn.onclick = function() {
+                const otherProjects = document.getElementById('other-projects');
+                if (otherProjects.style.display === 'none') {
+                    otherProjects.style.display = 'block';
+                    showMoreBtn.textContent = 'Show Less Projects';
+                    // Add fade-in animation
+                    otherProjects.style.opacity = '0';
+                    setTimeout(() => {
+                        otherProjects.style.transition = 'opacity 0.3s ease';
+                        otherProjects.style.opacity = '1';
+                    }, 10);
+                } else {
+                    // Add fade-out animation
+                    otherProjects.style.opacity = '0';
+                    setTimeout(() => {
+                        otherProjects.style.display = 'none';
+                        showMoreBtn.textContent = 'Show More Projects';
+                    }, 300);
+                }
+            };
+            projectsContainer.appendChild(showMoreBtn);
+        }
 
         // Initialize AOS for new elements
         AOS.refresh();
+
     } catch (error) {
         console.error('Error loading projects:', error);
         const projectsContainer = document.querySelector('#projects .row');
@@ -217,8 +270,10 @@ window.addEventListener('load', () => {
         `;
     }
 }
-function createProjectCard(project) {
-    const technologiesList = project.technologies.map(tech => 
+
+// Update the createProjectCard function to handle projects without images
+function createProjectCard(project, showImage = true) {
+    const technologiesList = project.technologies.map(tech =>
         `<span class="project-tag"><i class="fas fa-code"></i> ${tech}</span>`
     ).join('');
 
@@ -229,17 +284,18 @@ function createProjectCard(project) {
     return `
         <div class="col-lg-6 mb-4" data-aos="fade-up">
             <div class="project-card">
+                ${showImage ? `
                 <div class="project-image">
                     <img src="${project.image}" alt="${project.name}" class="img-fluid">
                     <div class="project-overlay">
                         <div class="project-actions">
-                            
                             <a href="https://github.com/${project.github}" class="btn btn-outline" target="_blank">
                                 <i class="fab fa-github"></i> Source Code
                             </a>
                         </div>
                     </div>
                 </div>
+                ` : ''}
                 <div class="project-content p-4">
                     <h3 class="mb-3">${project.name}</h3>
                     <p class="mb-3">${project.description}</p>
@@ -255,11 +311,20 @@ function createProjectCard(project) {
                             ${technologiesList}
                         </div>
                     </div>
+                    ${!showImage ? `
+                    <div class="mt-3">
+                        <a href="https://github.com/${project.github}" class="btn btn-outline btn-sm" target="_blank">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </div>
+                    ` : ''}
                 </div>
             </div>
         </div>
     `;
 }
+
+
     fetchProjects();
 
     // Scroll animations
