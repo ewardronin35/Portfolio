@@ -10,6 +10,10 @@ AOS.init({
     mirror: true,
     anchorPlacement: 'top-bottom',
 });
+  const navbar = document.querySelector('.navbar');
+    const scrollProgressBar = document.querySelector('.scroll-progress');
+    const sections = document.querySelectorAll('section[id]');
+    
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -165,145 +169,186 @@ window.addEventListener('load', () => {
         loop: true
     });
 
+particlesJS('particles-js', {
+        "particles": {
+            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#a0a0a0" },
+            "shape": { "type": "circle" },
+            "opacity": { "value": 0.5, "random": false },
+            "size": { "value": 3, "random": true },
+            "line_linked": { "enable": true, "distance": 150, "color": "#a0a0a0", "opacity": 0.4, "width": 1 },
+            "move": { "enable": true, "speed": 4, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+            "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+        },
+        "retina_detect": true
+    });
 
     async function fetchProjects() {
-    try {
-        const response = await fetch('projects.json');
-        const data = await response.json();
-        const projectsContainer = document.querySelector('#projects .row');
-        projectsContainer.innerHTML = '';
+        try {
+            const response = await fetch('projects.json');
+            const data = await response.json();
+            const projectsContainer = document.querySelector('#projects .row');
+            projectsContainer.innerHTML = '';
 
-        // Filter priority projects (Research System, PilarCare, and CHED-eTrack)
-        const priorityProjects = data.projects.filter(project =>
-            project.name.toLowerCase().includes('pilarcare') ||
-            project.name.toLowerCase().includes('ched-etrack') ||
-            project.name.toLowerCase().includes('research system')
-        );
+            const priorityProjects = data.projects.filter(project =>
+                project.name.toLowerCase().includes('pilarcare') ||
+                project.name.toLowerCase().includes('ched-etrack') ||
+                project.name.toLowerCase().includes('research system')
+            );
 
-        // Show priority projects with images
-        priorityProjects.forEach(project => {
-            projectsContainer.innerHTML += createProjectCard(project, true);
-        });
-
-        // Filter other projects
-        const otherProjects = data.projects.filter(project => 
-            !project.name.toLowerCase().includes('pilarcare') &&
-            !project.name.toLowerCase().includes('ched-etrack') &&
-            !project.name.toLowerCase().includes('research system')
-        );
-
-        // Create container for other projects (initially hidden)
-        if (otherProjects.length > 0) {
-            const otherProjectsContainer = document.createElement('div');
-            otherProjectsContainer.id = 'other-projects';
-            otherProjectsContainer.className = 'row g-4'; // Use row and g-4 for consistent spacing
-            otherProjectsContainer.style.display = 'none';
-
-            // Add other projects without images
-            otherProjects.forEach(project => {
-                otherProjectsContainer.innerHTML += createProjectCard(project, false);
+            priorityProjects.forEach(project => {
+                projectsContainer.innerHTML += createProjectCard(project, true);
             });
 
-            projectsContainer.appendChild(otherProjectsContainer);
+            const otherProjects = data.projects.filter(project => 
+                !project.name.toLowerCase().includes('pilarcare') &&
+                !project.name.toLowerCase().includes('ched-etrack') &&
+                !project.name.toLowerCase().includes('research system')
+            );
 
-            // Add "Show More Projects" button
-            const showMoreBtn = document.createElement('button');
-            showMoreBtn.className = 'btn btn-gradient mt-4 mx-auto d-block';
-            showMoreBtn.textContent = 'Show More Projects';
-            showMoreBtn.onclick = function() {
-                const otherProjectsEl = document.getElementById('other-projects');
-                if (otherProjectsEl.style.display === 'none') {
-                    otherProjectsEl.style.display = 'flex'; // Use flex for row behavior
-                    showMoreBtn.textContent = 'Show Less Projects';
-                    // Add fade-in animation
-                    otherProjectsEl.style.opacity = '0';
-                    setTimeout(() => {
-                        otherProjectsEl.style.transition = 'opacity 0.3s ease';
-                        otherProjectsEl.style.opacity = '1';
-                    }, 10);
-                } else {
-                    // Add fade-out animation
-                    otherProjectsEl.style.opacity = '0';
-                    setTimeout(() => {
-                        otherProjectsEl.style.display = 'none';
-                        showMoreBtn.textContent = 'Show More Projects';
-                    }, 300);
-                }
-            };
-             // Append button to the main container, not inside the other projects div
-            const buttonContainer = document.createElement('div');
-            buttonContainer.className = 'col-12 text-center';
-            buttonContainer.appendChild(showMoreBtn);
-            projectsContainer.appendChild(buttonContainer);
+            if (otherProjects.length > 0) {
+                const otherProjectsContainer = document.createElement('div');
+                otherProjectsContainer.id = 'other-projects';
+                otherProjectsContainer.className = 'row g-4';
+                otherProjectsContainer.style.display = 'none';
+
+                otherProjects.forEach(project => {
+                    otherProjectsContainer.innerHTML += createProjectCard(project, false);
+                });
+
+                projectsContainer.appendChild(otherProjectsContainer);
+
+                const showMoreBtn = document.createElement('button');
+                showMoreBtn.className = 'btn btn-gradient mt-4 mx-auto d-block';
+                showMoreBtn.textContent = 'Show More Projects';
+                showMoreBtn.onclick = function() {
+                    const otherProjectsEl = document.getElementById('other-projects');
+                    if (otherProjectsEl.style.display === 'none') {
+                        otherProjectsEl.style.display = 'flex';
+                        showMoreBtn.textContent = 'Show Less Projects';
+                        otherProjectsEl.style.opacity = '0';
+                        setTimeout(() => {
+                            otherProjectsEl.style.transition = 'opacity 0.3s ease';
+                            otherProjectsEl.style.opacity = '1';
+                        }, 10);
+                    } else {
+                        otherProjectsEl.style.opacity = '0';
+                        setTimeout(() => {
+                            otherProjectsEl.style.display = 'none';
+                            showMoreBtn.textContent = 'Show More Projects';
+                        }, 300);
+                    }
+                };
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'col-12 text-center';
+                buttonContainer.appendChild(showMoreBtn);
+                projectsContainer.appendChild(buttonContainer);
+            }
+
+            AOS.refresh();
+
+        } catch (error) {
+            console.error('Error loading projects:', error);
+            const projectsContainer = document.querySelector('#projects .row');
+            projectsContainer.innerHTML = `<div class="col-12 text-center"><p class="text-danger">Error loading projects. Please try again later.</p></div>`;
+        }
+    }
+
+    function createProjectCard(project, showImage = true) {
+        const technologiesList = project.technologies.map(tech => `<span class="project-tag"><i class="fas fa-code"></i> ${tech}</span>`).join('');
+        const featuresList = project.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('');
+
+        return `
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                <div class="project-card h-100">
+                    ${showImage ? `
+                    <div class="project-image">
+                        <img src="${project.image}" alt="${project.name}" class="img-fluid">
+                        <div class="project-overlay">
+                            <div class="project-actions">
+                                <a href="https://github.com/${project.github}" class="btn btn-outline" target="_blank">
+                                    <i class="fab fa-github"></i> Source Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>` : ''}
+                    <div class="project-content">
+                        <h3 class="mb-3">${project.name}</h3>
+                        <p class="mb-3">${project.description}</p>
+                        <div class="project-features mb-4">
+                            <h4 class="h6">Key Features:</h4>
+                            <ul class="feature-list">
+                                ${featuresList}
+                            </ul>
+                        </div>
+                        <div class="project-technologies mt-auto">
+                            <h4 class="h6 mb-2">Technologies Used:</h4>
+                            <div class="project-tags">
+                                ${technologiesList}
+                            </div>
+                        </div>
+                        ${!showImage ? `
+                        <div class="mt-3">
+                            <a href="https://github.com/${project.github}" class="btn btn-outline btn-sm" target="_blank">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                        </div>` : ''}
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    fetchProjects();
+
+function handleScroll() {
+        // Navbar scroll effect
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
 
-        // Initialize AOS for new elements
-        AOS.refresh();
+        // Scroll progress bar
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollProgress = (scrollTop / scrollHeight) * 100;
+        scrollProgressBar.style.width = scrollProgress + '%';
 
-    } catch (error) {
-        console.error('Error loading projects:', error);
-        const projectsContainer = document.querySelector('#projects .row');
-        projectsContainer.innerHTML = `
-            <div class="col-12 text-center">
-                <p class="text-danger">Error loading projects. Please try again later.</p>
-            </div>
-        `;
+        // Active link highlighting on scroll (Scroll Spy)
+        let currentSection = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 150) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === currentSection) {
+                link.classList.add('active');
+            }
+        });
     }
-}
 
-// Update the createProjectCard function to handle projects without images
-function createProjectCard(project, showImage = true) {
-    const technologiesList = project.technologies.map(tech =>
-        `<span class="project-tag"><i class="fas fa-code"></i> ${tech}</span>`
-    ).join('');
+    window.addEventListener('scroll', handleScroll);
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
 
-    const featuresList = project.features.map(feature =>
-        `<li><i class="fas fa-check"></i> ${feature}</li>`
-    ).join('');
-
-    return `
-        <div class="col-lg-6 mb-4" data-aos="fade-up">
-            <div class="project-card">
-                ${showImage ? `
-                <div class="project-image">
-                    <img src="${project.image}" alt="${project.name}" class="img-fluid">
-                    <div class="project-overlay">
-                        <div class="project-actions">
-                            <a href="https://github.com/${project.github}" class="btn btn-outline" target="_blank">
-                                <i class="fab fa-github"></i> Source Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                ` : ''}
-                <div class="project-content p-4">
-                    <h3 class="mb-3">${project.name}</h3>
-                    <p class="mb-3">${project.description}</p>
-                    <div class="project-features mb-4">
-                        <h4 class="h6">Key Features:</h4>
-                        <ul class="feature-list">
-                            ${featuresList}
-                        </ul>
-                    </div>
-                    <div class="project-technologies">
-                        <h4 class="h6 mb-2">Technologies Used:</h4>
-                        <div class="project-tags">
-                            ${technologiesList}
-                        </div>
-                    </div>
-                    ${!showImage ? `
-                    <div class="mt-3">
-                        <a href="https://github.com/${project.github}" class="btn btn-outline btn-sm" target="_blank">
-                            <i class="fab fa-github"></i> View on GitHub
-                        </a>
-                    </div>
-                    ` : ''}
-                </div>
-            </div>
-        </div>
-    `;
-}
-    fetchProjects();
 
     // Scroll animations
     window.addEventListener('scroll', () => {

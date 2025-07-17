@@ -52,8 +52,7 @@
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
     font-size: 0.75rem;
-        transition: background-color 0.3s ease, color 0.3s ease;
-
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 [data-theme="dark"] .tool-tag {
     background: var(--dark-bg-secondary);
@@ -240,13 +239,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--dark-bg);
+    background: var(--dark-bg-primary); /* Match dark theme bg */
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .loader {
     width: 50px;
     height: 50px;
@@ -380,9 +378,9 @@ body {
 }
 /* Navigation */
 .navbar {
-    background-color: var(--bg-primary);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
+    background-color: transparent;
+    transition: background-color 0.4s ease, padding 0.4s ease;
+    border-bottom: 1px solid transparent;
 }
 .bg-light {
     background-color: var(--bg-secondary) !important;
@@ -440,7 +438,14 @@ body {
 .navbar.scrolled {
     padding: 0.5rem 0;
 }
-
+.navbar.scrolled {
+    background-color: rgba(var(--bg-primary-rgb), 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
 .nav-link {
     font-weight: 500;
     text-transform: uppercase;
@@ -452,13 +457,13 @@ body {
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--gradient);
-    transition: all 0.3s ease;
     transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--gradient);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .nav-link::before {
     content: '';
@@ -477,8 +482,12 @@ body {
     transform: scaleX(1);
     transform-origin: left;
 }
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
     width: 100%;
+}
+.nav-link.active {
+    color: var(--primary-color) !important;
 }
 
 .nav-link i {
@@ -498,6 +507,31 @@ body {
     padding: 0;
     position: relative;
     overflow: hidden;
+}
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+.hero-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.animated-gradient {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-flow 4s linear infinite;
+}
+@keyframes gradient-flow {
+    0% { background-position: 200% center; }
+    100% { background-position: 0% center; }
 }
 
 .hero-section::before {
@@ -724,9 +758,10 @@ body {
     flex-direction: column;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-        perspective: 1000px;
-
 }
 .project-card:hover .project-content {
     transform: translateY(-10px);
@@ -735,9 +770,16 @@ body {
 .project-image {
     position: relative;
     overflow: hidden;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
 }
 
 .project-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: transform 0.6s;
 }
 
@@ -786,6 +828,7 @@ body {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    padding: 1.5rem;
 }
 
 .project-content h3 {
@@ -2167,10 +2210,10 @@ body,
     top: 0;
     left: 0;
     width: 0;
-    height: 3px;
+    height: 4px;
     background: var(--gradient);
-    z-index: 9999;
-    transition: width 0.1s ease;
+    z-index: 1050; /* Higher than navbar */
+    transition: width 0.1s ease-out;
 }
 /* Add these styles to improve mobile menu behavior */
 @media (max-width: 768px) {
