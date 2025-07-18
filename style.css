@@ -99,9 +99,20 @@
 /* Achievement List Styles */
 .achievement-list {
     list-style: none;
-    padding-left: 0;
+    padding-left: 2rem; /* Added padding for the vertical line */
+    position: relative;
 }
 
+.achievement-list::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: var(--primary-color);
+    opacity: 0.5;
+}
 .achievement-list li {
     position: relative;
     padding-left: 2rem;
@@ -1658,39 +1669,44 @@ body,
 
 .achievement-list {
     list-style: none;
-    padding-left: 0;
+     padding-left: 1.5rem;
     position: relative;
 }
 
 .achievement-item {
     position: relative;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 1.5rem 3rem; /* Increased left padding */
     margin-bottom: 1rem;
     background: var(--card-bg);
     border-radius: 1rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transform-origin: left;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to visible */
 }
+
 
 .achievement-item::before {
     content: '🏆';
     position: absolute;
-    left: -2rem;
-    opacity: 0;
-    transition: all 0.3s ease;
+    left: 1rem; /* Adjusted position */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    opacity: 1;
+    z-index: 2;
 }
 
 .achievement-item:hover {
-    transform: translateX(1rem) translateY(-5px);
+    transform: translateX(5px) translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .achievement-item:hover::before {
-    left: 1rem;
-    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+    transition: transform 0.3s ease;
 }
+
 
 .achievement-year {
     display: inline-block;
@@ -1703,9 +1719,8 @@ body,
 }
 
 .achievement-content {
-    padding-left: 1rem;
-    border-left: 3px solid transparent;
-    transition: all 0.3s ease;
+    padding-left: 0.5rem; /* Reduced padding */
+    border-left: none; /* Removed the border since we have the main timeline */
 }
 
 .achievement-item:hover .achievement-content {
@@ -1894,6 +1909,7 @@ body,
     /* Improve achievement animations */
     .achievement-item {
         transform: translateX(0);
+        padding: 1rem 1rem 1rem 2.5rem;
         transition: all 0.3s ease;
     }
 
@@ -1943,7 +1959,10 @@ body,
         align-items: center;
         margin-bottom: 2rem;
     }
-
+    .achievement-item::before {
+        left: 0.8rem;
+        font-size: 1rem;
+    }
     .footer .logo-container {
         justify-content: center;
         margin-bottom: 1rem;
