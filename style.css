@@ -2275,3 +2275,107 @@ body,
     padding: 0.8rem 2.5rem;
     font-size: 1.1rem;
 }
+
+/* ================== Project Showcase Slider ================== */
+.project-showcase-section {
+    padding: 5rem 0;
+    overflow: hidden;
+}
+
+.slider-container {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    border-radius: 1rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); /* Smooth transition */
+}
+
+.slide {
+    min-width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide-content {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.slide-content img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.slide:hover .slide-content img {
+    transform: scale(1.05);
+}
+
+.slide-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(10, 25, 47, 0.9) 0%, rgba(10, 25, 47, 0) 100%);
+    color: var(--dark-text-primary);
+    transform: translateY(50%);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.slide:hover .slide-info {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.slide-info h3 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.slide-info p {
+    color: var(--dark-text-secondary);
+    margin-bottom: 1rem;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.slider-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.prev-btn {
+    left: 20px;
+}
+
+.next-btn {
+    right: 20px;
+}

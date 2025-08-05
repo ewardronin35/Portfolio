@@ -133,17 +133,8 @@ navLinks.forEach(link => {
         }
     });
 });
-    // Custom cursor
-       const cursor = document.querySelector('.cursor');
-    const cursorFollower = document.querySelector('.cursor-follower');
-    
-    // Check if device is not mobile/tablet
-    function isDesktop() {
-        return window.innerWidth > 768 && !('ontouchstart' in window);
-    }
 
  
-    // Preloader
 // Replace the existing preloader code
 window.addEventListener('load', () => {
     const preloader = document.querySelector('#preloader');
@@ -186,6 +177,48 @@ particlesJS('particles-js', {
         },
         "retina_detect": true
     });
+
+    // ================== Project Slider Logic ==================
+    const slider = document.querySelector('.slider-container');
+    if (slider) {
+        const slides = document.querySelector('.slides');
+        const slideItems = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        let currentIndex = 0;
+        const slideCount = slideItems.length;
+
+        function updateSliderPosition() {
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % slideCount;
+            updateSliderPosition();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+            updateSliderPosition();
+        });
+
+        // Optional: Auto-slide
+        let autoSlideInterval = setInterval(() => {
+            nextBtn.click();
+        }, 5000); // Change slide every 5 seconds
+
+        // Pause on hover
+        slider.addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval);
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            autoSlideInterval = setInterval(() => {
+                nextBtn.click();
+            }, 5000);
+        });
+    }
 
     async function fetchProjects() {
         try {
@@ -267,7 +300,7 @@ particlesJS('particles-js', {
                 <div class="project-card h-100">
                     ${showImage ? `
                     <div class="project-image">
-                        <img src="${project.image}" alt="${project.name}" class="img-fluid">
+                        <img src="${project.image}" alt="${project.name}" class="img-fluid" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1d2d50/e6f1ff?text=Project+Image';">
                         <div class="project-overlay">
                             <div class="project-actions">
                                 <a href="https://github.com/${project.github}" class="btn btn-outline" target="_blank">
