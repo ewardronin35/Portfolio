@@ -393,7 +393,42 @@ function handleScroll() {
         }
     });
 });
+  // ================== Advanced Swiper Carousel ==================
+    const swiper = new Swiper('.my-work-slider', {
+        // Optional parameters
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        loop: true,
+        
+        // Autoplay
+        autoplay: {
+          delay: 4000, // 4 seconds
+          disableOnInteraction: false,
+        },
+        
+        // Coverflow effect settings
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
 
+        // If we need pagination
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+
+        // Navigation arrows
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+    });
 const themeToggle = document.querySelector('.theme-toggle');
 const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 

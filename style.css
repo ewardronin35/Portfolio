@@ -2276,106 +2276,111 @@ body,
     font-size: 1.1rem;
 }
 
-/* ================== Project Showcase Slider ================== */
+/* ================== Advanced Project Showcase Slider ================== */
 .project-showcase-section {
     padding: 5rem 0;
     overflow: hidden;
 }
 
-.slider-container {
-    position: relative;
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
+.my-work-slider {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.my-work-slider .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 320px; /* Adjust size of the central slide */
+    height: auto;
     border-radius: 1rem;
+    overflow: hidden;
     box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    overflow: hidden;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    opacity: 0.5;
+    transform: scale(0.8);
 }
 
-.slides {
-    display: flex;
-    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); /* Smooth transition */
+.my-work-slider .swiper-slide-active {
+    opacity: 1;
+    transform: scale(1);
 }
 
-.slide {
-    min-width: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-.slide-content {
+.my-work-slider .slide-content {
     position: relative;
     width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    padding-top: 60%; /* Aspect ratio for the slide images */
 }
 
-.slide-content img {
+.my-work-slider .slide-content img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
 }
 
-.slide:hover .slide-content img {
-    transform: scale(1.05);
-}
-
-.slide-info {
+.my-work-slider .slide-info {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 2rem;
-    background: linear-gradient(to top, rgba(10, 25, 47, 0.9) 0%, rgba(10, 25, 47, 0) 100%);
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(10, 25, 47, 0.95) 10%, rgba(10, 25, 47, 0) 100%);
     color: var(--dark-text-primary);
-    transform: translateY(50%);
-    opacity: 0;
-    transition: all 0.5s ease;
 }
 
-.slide:hover .slide-info {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.slide-info h3 {
+.my-work-slider .slide-info h3 {
     color: #fff;
+    font-size: 1.1rem;
     margin-bottom: 0.5rem;
 }
 
-.slide-info p {
+.my-work-slider .slide-info p {
     color: var(--dark-text-secondary);
+    font-size: 0.85rem;
     margin-bottom: 1rem;
+    height: 50px; /* Fixed height to align buttons */
+    overflow: hidden;
 }
 
-.slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    width: 50px;
-    height: 50px;
+/* Styling for Navigation Buttons and Pagination */
+.my-work-slider .swiper-button-next,
+.my-work-slider .swiper-button-prev {
+    color: var(--primary-color);
+    background-color: rgba(var(--bg-primary-rgb), 0.5);
+    backdrop-filter: blur(4px);
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 10;
     transition: all 0.3s ease;
 }
-
-.slider-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+.my-work-slider .swiper-button-next:hover,
+.my-work-slider .swiper-button-prev:hover {
+    background-color: rgba(var(--bg-primary-rgb), 0.8);
+    color: var(--secondary-color);
 }
 
-.prev-btn {
-    left: 20px;
+.my-work-slider .swiper-button-next::after,
+.my-work-slider .swiper-button-prev::after {
+    font-size: 1.2rem;
+    font-weight: 900;
 }
 
-.next-btn {
-    right: 20px;
+.my-work-slider .swiper-pagination-bullet {
+    background: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.my-work-slider .swiper-pagination-bullet-active {
+    background: var(--primary-color);
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .my-work-slider .swiper-slide {
+        width: 450px;
+    }
 }
