@@ -33,7 +33,26 @@ const navbarCollapse = document.querySelector('.navbar-collapse');
 
 // Mobile menu functionality
 
+const profileWrapper = document.getElementById('profile-tilt-wrapper');
+if (profileWrapper) {
+    profileWrapper.addEventListener('mousemove', (e) => {
+        const rect = profileWrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -5; // Max rotation 5 degrees
+        const rotateY = ((x - centerX) / centerX) * 5; // Max rotation 5 degrees
+
+        profileWrapper.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    });
+
+    profileWrapper.addEventListener('mouseleave', () => {
+        profileWrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+    });
+}
 const mobileMenu = {
     init() {
         const hamburger = document.querySelector('.navbar-toggler');
@@ -147,18 +166,21 @@ window.addEventListener('load', () => {
 });
 
     // Typing animation
-    new Typed('.typed-text', {
-        strings: [
-            'Full Stack Developer',
-            'System Analyst',
-            'Mobile Developer',
-            'UI/UX Designer'
-        ],
-        typeSpeed: 50,
-        backSpeed: 30,
-        backDelay: 1000,
-        loop: true
-    });
+new Typed('.typed-text', {
+    strings: [
+        'Full Stack Developer',
+        'System Analyst',
+        'Web Developer',
+        'Software Engineer',
+        'Data Analyst',
+        'Mobile App Creator',
+        'UI/UX Enthusiast'
+    ],
+    typeSpeed: 50,
+    backSpeed: 30,
+    backDelay: 1500,
+    loop: true
+});
 
 particlesJS('particles-js', {
         "particles": {
