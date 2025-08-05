@@ -1,281 +1,111 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize AOS
 
-AOS.init({
-    duration: 800,
-    easing: 'ease-out-cubic',
-    once: true,
-    offset: 50,
-    
-    mirror: true,
-    anchorPlacement: 'top-bottom',
-});
-  const navbar = document.querySelector('.navbar');
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 50,
+        mirror: false
+    });
+
+    const navbar = document.querySelector('.navbar');
     const scrollProgressBar = document.querySelector('.scroll-progress');
     const sections = document.querySelectorAll('section[id]');
-    
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            window.scrollTo({
-                top: target.offsetTop - 80,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-const navLinks = document.querySelectorAll('.nav-link');
-const navbarCollapse = document.querySelector('.navbar-collapse');
-
-
-// Mobile menu functionality
-
-
-const mobileMenu = {
-    init() {
-        const hamburger = document.querySelector('.navbar-toggler');
-        const navbarCollapse = document.querySelector('.navbar-collapse');
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const isNavbarCollapse = e.target.closest('.navbar-collapse');
-            const isHamburger = e.target.closest('.navbar-toggler');
+    // Mobile menu functionality
+    const mobileMenu = {
+        init() {
+            const hamburger = document.querySelector('.navbar-toggler');
             
-            if (!isNavbarCollapse && !isHamburger && navbarCollapse.classList.contains('show')) {
-                hamburger.click();
-            }
-        });
-
-        // Close menu when clicking nav links
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (navbarCollapse.classList.contains('show')) {
+            document.addEventListener('click', (e) => {
+                const isNavbarCollapse = e.target.closest('.navbar-collapse');
+                const isHamburger = e.target.closest('.navbar-toggler');
+                
+                if (!isNavbarCollapse && !isHamburger && navbarCollapse.classList.contains('show')) {
                     hamburger.click();
                 }
             });
-        });
 
-        // Close menu on scroll
-        window.addEventListener('scroll', () => {
-            if (navbarCollapse.classList.contains('show')) {
-                hamburger.click();
-            }
-        });
-
-        // Add touch event handling for mobile
-        document.addEventListener('touchstart', (e) => {
-            const isNavbarCollapse = e.target.closest('.navbar-collapse');
-            const isHamburger = e.target.closest('.navbar-toggler');
-            
-            if (!isNavbarCollapse && !isHamburger && navbarCollapse.classList.contains('show')) {
-                hamburger.click();
-            }
-        });
-    }
-};
-mobileMenu.init();
-const mobileOptimizations = {
-    init() {
-        if (window.innerWidth <= 768) {
-            // Defer non-critical resources
-            this.deferImages();
-            this.optimizeAnimations();
-            this.addPullToRefresh();
-        }
-    },
-
-    deferImages() {
-        const images = document.querySelectorAll('img[data-src]');
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    imageObserver.unobserve(img);
-                }
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navbarCollapse.classList.contains('show')) {
+                        hamburger.click();
+                    }
+                });
             });
-        });
-
-        images.forEach(img => imageObserver.observe(img));
-    },
-
-    optimizeAnimations() {
-        // Use requestAnimationFrame for smooth animations
-        const animatedElements = document.querySelectorAll('.animated-element');
-        
-        const animate = () => {
-            animatedElements.forEach(element => {
-                const rect = element.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    element.classList.add('animate');
-                }
-            });
-            requestAnimationFrame(animate);
-        };
-
-        requestAnimationFrame(animate);
-    },
-
-    addPullToRefresh() {
-        // Add pull-to-refresh functionality if needed
-    }
-};
-    mobileOptimizations.init();
-
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        if (window.innerWidth < 992) {
-            navbarCollapse.classList.remove('show');
         }
-    });
-});
-    // Custom cursor
-       const cursor = document.querySelector('.cursor');
-    const cursorFollower = document.querySelector('.cursor-follower');
-    
-    // Check if device is not mobile/tablet
-    function isDesktop() {
-        return window.innerWidth > 768 && !('ontouchstart' in window);
-    }
+    };
+    mobileMenu.init();
 
- 
     // Preloader
-// Replace the existing preloader code
-window.addEventListener('load', () => {
-    const preloader = document.querySelector('#preloader');
-    preloader.style.opacity = '0';
-    preloader.style.transition = 'opacity 0.5s ease';
-    
-    setTimeout(() => {
-        preloader.style.display = 'none';
-    }, 500);
-});
+    window.addEventListener('load', () => {
+        const preloader = document.querySelector('#preloader');
+        preloader.style.opacity = '0';
+        preloader.style.transition = 'opacity 0.5s ease';
+        
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500);
+    });
 
     // Typing animation
-    new Typed('.typed-text', {
-        strings: [
-            'Full Stack Developer',
-            'System Analyst',
-            'Mobile Developer',
-            'UI/UX Designer'
-        ],
-        typeSpeed: 50,
-        backSpeed: 30,
-        backDelay: 1000,
-        loop: true
-    });
-
-particlesJS('particles-js', {
-        "particles": {
-            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": "#a0a0a0" },
-            "shape": { "type": "circle" },
-            "opacity": { "value": 0.5, "random": false },
-            "size": { "value": 3, "random": true },
-            "line_linked": { "enable": true, "distance": 150, "color": "#a0a0a0", "opacity": 0.4, "width": 1 },
-            "move": { "enable": true, "speed": 4, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
-            "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
-        },
-        "retina_detect": true
-    });
-
-    async function fetchProjects() {
-        try {
-            const response = await fetch('projects.json');
-            const data = await response.json();
-            const projectsContainer = document.querySelector('#projects .row');
-            projectsContainer.innerHTML = '';
-
-            const priorityProjects = data.projects.filter(project =>
-                project.name.toLowerCase().includes('pilarcare') ||
-                project.name.toLowerCase().includes('ched-etrack') ||
-                project.name.toLowerCase().includes('research system')
-            );
-
-            priorityProjects.forEach(project => {
-                projectsContainer.innerHTML += createProjectCard(project, true);
-            });
-
-            const otherProjects = data.projects.filter(project => 
-                !project.name.toLowerCase().includes('pilarcare') &&
-                !project.name.toLowerCase().includes('ched-etrack') &&
-                !project.name.toLowerCase().includes('research system')
-            );
-
-            if (otherProjects.length > 0) {
-                const otherProjectsContainer = document.createElement('div');
-                otherProjectsContainer.id = 'other-projects';
-                otherProjectsContainer.className = 'row g-4';
-                otherProjectsContainer.style.display = 'none';
-
-                otherProjects.forEach(project => {
-                    otherProjectsContainer.innerHTML += createProjectCard(project, false);
-                });
-
-                projectsContainer.appendChild(otherProjectsContainer);
-
-                const showMoreBtn = document.createElement('button');
-                showMoreBtn.className = 'btn btn-gradient mt-4 mx-auto d-block';
-                showMoreBtn.textContent = 'Show More Projects';
-                showMoreBtn.onclick = function() {
-                    const otherProjectsEl = document.getElementById('other-projects');
-                    if (otherProjectsEl.style.display === 'none') {
-                        otherProjectsEl.style.display = 'flex';
-                        showMoreBtn.textContent = 'Show Less Projects';
-                        otherProjectsEl.style.opacity = '0';
-                        setTimeout(() => {
-                            otherProjectsEl.style.transition = 'opacity 0.3s ease';
-                            otherProjectsEl.style.opacity = '1';
-                        }, 10);
-                    } else {
-                        otherProjectsEl.style.opacity = '0';
-                        setTimeout(() => {
-                            otherProjectsEl.style.display = 'none';
-                            showMoreBtn.textContent = 'Show More Projects';
-                        }, 300);
-                    }
-                };
-                const buttonContainer = document.createElement('div');
-                buttonContainer.className = 'col-12 text-center';
-                buttonContainer.appendChild(showMoreBtn);
-                projectsContainer.appendChild(buttonContainer);
-            }
-
-            AOS.refresh();
-
-        } catch (error) {
-            console.error('Error loading projects:', error);
-            const projectsContainer = document.querySelector('#projects .row');
-            projectsContainer.innerHTML = `<div class="col-12 text-center"><p class="text-danger">Error loading projects. Please try again later.</p></div>`;
-        }
+    if (document.querySelector('.typed-text')) {
+        new Typed('.typed-text', {
+            strings: [
+                'Full Stack Developer',
+                'System Analyst',
+                'Mobile Developer',
+                'UI/UX Designer'
+            ],
+            typeSpeed: 50,
+            backSpeed: 30,
+            backDelay: 1000,
+            loop: true
+        });
     }
 
-    function createProjectCard(project, showImage = true) {
+    // Particles.js initialization
+    if (document.getElementById('particles-js')) {
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#a0a0a0" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": false },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#a0a0a0", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 4, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+            },
+            "retina_detect": true
+        });
+    }
+
+    // Function to create project cards
+    function createProjectCard(project) {
         const technologiesList = project.technologies.map(tech => `<span class="project-tag"><i class="fas fa-code"></i> ${tech}</span>`).join('');
         const featuresList = project.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('');
 
         return `
             <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
                 <div class="project-card h-100">
-                    ${showImage ? `
                     <div class="project-image">
                         <img src="${project.image}" alt="${project.name}" class="img-fluid">
                         <div class="project-overlay">
                             <div class="project-actions">
-                                <a href="https://github.com/${project.github}" class="btn btn-outline" target="_blank">
+                                <a href="${project.github}" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-github"></i> Source Code
                                 </a>
                             </div>
                         </div>
-                    </div>` : ''}
+                    </div>
                     <div class="project-content">
                         <h3 class="mb-3">${project.name}</h3>
                         <p class="mb-3">${project.description}</p>
@@ -291,20 +121,51 @@ particlesJS('particles-js', {
                                 ${technologiesList}
                             </div>
                         </div>
-                        ${!showImage ? `
-                        <div class="mt-3">
-                            <a href="https://github.com/${project.github}" class="btn btn-outline btn-sm" target="_blank">
-                                <i class="fab fa-github"></i> View on GitHub
-                            </a>
-                        </div>` : ''}
                     </div>
                 </div>
             </div>`;
     }
+    
+    // Fetch and display projects (simplified for a local HTML file)
+    function displayProjects() {
+        // Since we don't have a projects.json, we will manually create an array of project objects
+        // and add them directly to the page.
+        const projects = [
+            // Your projects can be added here. Example:
+            {
+                "name": "PilarCare: Clinic Management System",
+                "description": "A web-based system for managing clinic operations at Pilar College.",
+                "features": ["Appointment scheduling", "Patient records management", "Inventory tracking"],
+                "technologies": ["Laravel", "Bootstrap", "MySQL"],
+                "github": "ewardronin35/PilarCare-Web-Based-Clinic-Management-System-at-Pilar-College",
+                "image": "path/to/pilarcare.png"
+            },
+            {
+                "name": "CHED-eTrack: Document Management System",
+                "description": "A comprehensive system for tracking and managing documents for CHED Region IX.",
+                "features": ["Document status tracking", "Internal messaging", "Automated notifications"],
+                "technologies": ["Laravel", "JavaScript", "Bootstrap"],
+                "github": "ewardronin35/CHED-eTrack-Document-Management-System",
+                "image": "path/to/ched.png"
+            }
+        ];
 
-    fetchProjects();
+        const projectsContainer = document.querySelector('#projects .row');
+        projectsContainer.innerHTML = ''; // Clear any existing content
 
-function handleScroll() {
+        projects.forEach(project => {
+            projectsContainer.innerHTML += createProjectCard(project);
+        });
+
+        AOS.refresh();
+    }
+    
+    // Call the display projects function
+    displayProjects();
+    
+
+    // Consolidated Scroll Handler
+    function handleScroll() {
         // Navbar scroll effect
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -315,18 +176,21 @@ function handleScroll() {
         // Scroll progress bar
         const scrollTop = document.documentElement.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrollProgress = (scrollTop / scrollHeight) * 100;
-        scrollProgressBar.style.width = scrollProgress + '%';
-
+        if (scrollHeight > 0) {
+            const scrollProgress = (scrollTop / scrollHeight) * 100;
+            scrollProgressBar.style.width = scrollProgress + '%';
+        }
+        
         // Active link highlighting on scroll (Scroll Spy)
         let currentSection = '';
         sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (pageYOffset >= sectionTop - 150) {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.clientHeight;
+            if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
                 currentSection = section.getAttribute('id');
             }
         });
-
+        
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href').substring(1) === currentSection) {
@@ -334,8 +198,10 @@ function handleScroll() {
             }
         });
     }
-
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call on load to set initial state
+
+    // Smooth Scroll Handler
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -349,95 +215,31 @@ function handleScroll() {
         });
     });
 
+    const themeToggle = document.querySelector('.theme-toggle');
 
-    // Scroll animations
-    window.addEventListener('scroll', () => {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-});
-$(document).ready(function() {
-    $('#contact-form').submit(function(e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: 'send_message.php',
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response === 'success') {
-                    toastr.success('Message sent successfully!');
-                    $('#contact-form')[0].reset();
-                } else {
-                    toastr.error('Error sending message.');
-                }
-            },
-            error: function() {
-                toastr.error('Error sending message.');
-            }
-        });
-    });
-});
-const themeToggle = document.querySelector('.theme-toggle');
-const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-// Check for saved theme preference or default to user's system preference
-const currentTheme = localStorage.getItem('theme') || 
-    (prefersDarkScheme.matches ? 'dark' : 'light');
-
-// Set initial theme
-document.documentElement.setAttribute('data-theme', currentTheme);
-updateThemeIcon(currentTheme);
-
-// Theme toggle handler
-themeToggle.addEventListener('click', () => {
-    const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' 
-        ? 'light' 
-        : 'dark';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
-});
-function updateTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    
-    const icon = document.querySelector('.theme-toggle i');
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-    
-    // Add transition class
-    document.body.classList.add('theme-transition');
-    setTimeout(() => {
-        document.body.classList.remove('theme-transition');
-    }, 300);
-}
-function updateThemeIcon(theme) {
-    const icon = themeToggle.querySelector('i');
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-}
-function checkTime() {
-    const hour = new Date().getHours();
-    // Light theme between 6 AM and 5 PM (17:00)
-    const shouldBeLightTheme = hour >= 6 && hour < 17;
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    
-    if (shouldBeLightTheme && currentTheme !== 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        updateThemeIcon('light');
-    } else if (!shouldBeLightTheme && currentTheme !== 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        updateThemeIcon('dark');
+    // Theme functionality
+    function updateTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        updateThemeIcon(theme);
     }
-}
 
-// Check time on page load
-checkTime();
+    function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
 
-// Check time every minute
-setInterval(checkTime, 60000);
+    // Check for saved theme preference or default to user's system preference
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentTheme = localStorage.getItem('theme') || 
+        (prefersDarkScheme.matches ? 'dark' : 'light');
+    updateTheme(currentTheme);
+
+    // Theme toggle handler
+    themeToggle.addEventListener('click', () => {
+        const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' 
+            ? 'light' 
+            : 'dark';
+        updateTheme(newTheme);
+    });
+});
