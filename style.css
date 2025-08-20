@@ -831,11 +831,10 @@ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 /* Profile Circle */
 .profile-wrapper {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 450px; /* Increased from 300px */
+    height: 450px; /* Increased from 300px */
     margin: 0 auto;
 }
-
 .profile-circle {
     width: 100%;
     height: 100%;
@@ -864,7 +863,69 @@ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease;
 }
 
+.profile-slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
 
+.profile-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+/* Company Logo Styles */
+.company-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    vertical-align: middle;
+    border-radius: 4px;
+    margin-top: -2px;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .company-logo {
+    filter: brightness(0.9);
+}
+.profile-slide.active {
+    opacity: 1;
+}
+
+.profile-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Profile navigation dots */
+.profile-dots {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 3;
+}
+
+.profile-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-dot.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
+}
 .theme-toggle:hover {
     transform: rotate(180deg);
 }
@@ -874,8 +935,8 @@ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 .profile-circle-bg {
     position: absolute;
-    width: 320px;
-    height: 320px;
+    width: 470px;
+    height: 470px;
     border-radius: 50%;
     background: var(--gradient);
     top: -10px;
@@ -1031,14 +1092,14 @@ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 /* Responsive */
 @media (max-width: 768px) {
     .profile-wrapper {
-        width: 200px;
-        height: 200px;
+width: 300px;
+        height: 300px;
         margin: 2rem auto;
     }
     
     .profile-circle-bg {
-        width: 220px;
-        height: 220px;
+       width: 320px;
+        height: 320px;
     }  
     .experience-badge {
         right: 50%;

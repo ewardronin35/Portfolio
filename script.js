@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize AOS
+    initProfileSlider();
 
 AOS.init({
     duration: 800,
@@ -32,26 +32,58 @@ const navbarCollapse = document.querySelector('.navbar-collapse');
 
 
 // Mobile menu functionality
+function initProfileSlider() {
+    const profileWrapper = document.getElementById('profile-tilt-wrapper');
+    if (profileWrapper) {
+        const slides = document.querySelectorAll('.profile-slide');
+        const dots = document.querySelectorAll('.profile-dot');
+        let currentSlide = 0;
+        let slideInterval;
 
-const profileWrapper = document.getElementById('profile-tilt-wrapper');
-if (profileWrapper) {
-    profileWrapper.addEventListener('mousemove', (e) => {
-        const rect = profileWrapper.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        // Show initial slide
+        showSlide(0);
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? '1' : '0';
+                slide.style.zIndex = i === index ? '1' : '0';
+            });
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
 
-        const rotateX = ((y - centerY) / centerY) * -5; // Max rotation 5 degrees
-        const rotateY = ((x - centerX) / centerX) * 5; // Max rotation 5 degrees
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
 
-        profileWrapper.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-    });
+        function startSlideshow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
 
-    profileWrapper.addEventListener('mouseleave', () => {
-        profileWrapper.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-    });
+        function stopSlideshow() {
+            clearInterval(slideInterval);
+        }
+
+        // Add click handlers for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+                stopSlideshow();
+                startSlideshow();
+            });
+        });
+
+        // Start automatic slideshow
+        startSlideshow();
+
+        // Pause on hover
+        profileWrapper.addEventListener('mouseenter', stopSlideshow);
+        profileWrapper.addEventListener('mouseleave', startSlideshow);
+    }
 }
 const mobileMenu = {
     init() {
