@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     initProfileSlider();
+    initThemeToggle();
 
 AOS.init({
     duration: 800,
@@ -508,15 +509,69 @@ function updateTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
     
-    const icon = document.querySelector('.theme-toggle i');
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-    
     // Add transition class
     document.body.classList.add('theme-transition');
     setTimeout(() => {
         document.body.classList.remove('theme-transition');
     }, 300);
 }
+
+function initThemeToggle() {
+    const themeToggles = document.querySelectorAll('.theme-toggle, .theme-toggle-mobile');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Get saved theme or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemTheme = prefersDarkScheme.matches ? 'dark' : 'light';
+    const currentTheme = savedTheme || systemTheme;
+
+    // Set initial theme
+    setTheme(currentTheme);
+
+    // Theme toggle handler
+    themeToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' 
+                ? 'light' 
+                : 'dark';
+            setTheme(newTheme);
+        });
+    });
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        updateThemeIcons(theme);
+    }
+
+    function updateThemeIcons(theme) {
+        themeToggles.forEach(toggle => {
+            const icon = toggle.querySelector('i');
+            if (theme === 'dark') {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        });
+    }
+
+    // Listen for system theme changes
+    prefersDarkScheme.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            setTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+}
+
+// Add scroll handler for navbar
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
 function updateThemeIcon(theme) {
     const icon = themeToggle.querySelector('i');
     icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
