@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4a90e2">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <meta name="format-detection" content="telephone=no">
@@ -45,13 +45,12 @@
 
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-        <!-- Logo -->
         <a class="navbar-brand" href="#home">
             <div class="logo-container">
-                <div class="logo-symbol">E</div>
+                <div class="logo-symbol">ER</div>
                 <div class="logo-text">
-                    <span class="logo-name">Eduard</span>
-                    <span class="logo-title">Developer</span>
+                    <span class="logo-name">Eduard Roland</span>
+                    <span class="logo-title">Software Engineer</span>
                 </div>
             </div>
         </a>
@@ -67,7 +66,6 @@
             </button>
         </div>
 
-        <!-- Navigation Items -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="mobile-nav-header d-lg-none">
                 <div class="mobile-brand">
@@ -237,9 +235,12 @@
                         <span class="badge bg-gradient mb-2">2021 - 2025</span>
                         <h4 class="h5">Bachelor of Science in Information Technology</h4>
                         <p class="text-gradient fw-bold">Cum Laude</p>
-                        <p class="mb-0">Pilar College of Zamboanga City, Inc.</p>
+                        <p class="mb-0">
+                            <img src="logos/pilar-logo.png" alt="Pilar College Logo" class="company-logo me-2" onerror="this.style.display='none'">
+                            Pilar College of Zamboanga City, Inc.
+                        </p>
                         <ul class="timeline-details">
-                            <li>Graduated with academic honors (Cum Laude)</li>
+                            <li>Graduated with Latin honors (Cum Laude)</li>
                             <li>Major in Web and Mobile Development</li>
                             <li>Dean's Lister for 8 consecutive semesters</li>
                             <li>Thesis: "PilarCare: Web-Based Clinic Management System at Pilar College of Zamboanga City, Inc."</li>
@@ -252,7 +253,9 @@
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
                         <span class="badge bg-gradient mb-2">2018 - 2020</span>
                         <h4 class="h5">Senior High School</h4>
-                        <p class="mb-0">Pilar College of Zamboanga City, Inc.</p>
+                        <p class="mb-0">
+                            Pilar College of Zamboanga City, Inc.
+                        </p>
                         <p>ABM Strand - With Honors</p>
                         <ul class="timeline-details">
                             <li>Artist of the Year</li>
@@ -263,7 +266,10 @@
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
                         <span class="badge bg-gradient mb-2">2014 - 2018</span>
                         <h4 class="h5">High School</h4>
-                        <p class="mb-0">Immaculate Conception Archdiocesan School de Calarian</p>
+                        <p class="mb-0">
+                            <img src="logos/icas-logo.png" alt="icas-logo" class="company-logo me-2" onerror="this.style.display='none'">
+                            Immaculate Conception Archdiocesan School de Calarian
+                        </p>
                         <p>With Honors</p>
                         <ul class="timeline-details">
                             <li>Consistent Honor Student</li>
@@ -272,7 +278,10 @@
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
                         <span class="badge bg-gradient mb-2">2009 - 2014</span>
                         <h4 class="h5">Elementary School</h4>
-                        <p class="mb-0">Southcom Elementary School</p>
+                        <p class="mb-0">
+                            <img src="logos/southcom-logo.png" alt="southcom-logo" class="company-logo me-2" onerror="this.style.display='none'">
+                            Southcom Elementary School
+                        </p>
                         <ul class="timeline-details">
                             <li>Consistent Honor Student</li>
                             <li>Science Club Member</li>
@@ -504,6 +513,28 @@
                     </div>
                 </div>
             </div>
+                        <div class="col-md-6" data-aos="fade-up">
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fas fa-laptop-code cert-icon"></i>
+                        <div class="cert-info">
+                            <h3>Introduction to Cyber Security</h3>
+                            <p>Cisco</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="col-md-6" data-aos="fade-up">
+                <div class="cert-card">
+                    <div class="cert-header">
+                        <i class="fab fa-js-square cert-icon"></i>
+                        <div class="cert-info">
+                            <h3>Javascript Essentials</h3>
+                            <p>Cisco</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     </section>
@@ -582,9 +613,29 @@
                     <p class="lead text-muted mb-4">
                         Have a project in mind or just want to say hello? My inbox is always open.
                     </p>
-                    <a href="mailto:eduardroland20@gmail.com" class="btn btn-gradient btn-lg mb-4">
-                        <i class="fas fa-paper-plane me-2"></i> Email Me
-                    </a>
+                    <form id="contact-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                                    <label for="name">Your Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                                    <label for="email">Your Email</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="message" placeholder="Your Message" style="height: 150px" required></textarea>
+                            <label for="message">Your Message</label>
+                        </div>
+                        <button type="submit" class="btn btn-gradient btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i> Send Message
+                        </button>
+                    </form>
                     <div class="social-links-wrapper mt-4">
                         <h4 class="h6 text-muted mb-3">Or find me on social media:</h4>
                         <div class="d-flex gap-3 justify-content-center">
@@ -613,11 +664,16 @@
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="footer-brand">
-                    <div class="logo-container mb-3">
-                        <span class="logo-bracket">&lt;</span>
-                        <span class="logo-text">Eduard</span>
-                        <span class="logo-bracket">/&gt;</span>
-                    </div>
+                    <a class="navbar-brand" href="#home">
+                        <div class="logo-container">
+                            <div class="logo-symbol">ER</div>
+                            <div class="logo-text">
+                                <span class="logo-name">Eduard Roland</span>
+                                <span class="logo-title">Full-stack Developer/Software Engineer</span>
+                            </div>
+                        </div>
+                    </a>
+                    <br>
                     <p class="text-muted mb-3">Turning ideas into elegant solutions through code.</p>
                     <div class="footer-contact-info">
                         <div class="contact-item mb-2">
@@ -630,7 +686,7 @@
                         </div>
                         <div class="contact-item mb-3">
                             <i class="fas fa-phone me-2"></i>
-                            <span>+63 927 0909 027</span>
+                            <span>+63 9475 365 202</span>
                         </div>
                     </div>
                     <div class="footer-availability">
@@ -671,7 +727,7 @@
         <div class="footer-bottom">
             <p class="mb-0 text-center">
                 &copy; 2025 Eduard Roland Donor. All rights reserved.
-                <span class="footer-made">Made with <i class="fas fa-heart"></i> in Philippines</span>
+                
             </p>
         </div>
     </div>

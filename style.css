@@ -3100,3 +3100,30 @@ body,
     position: relative;
     z-index: 1; /* Keeps content above the particles */
 }
+
+.nav-link:hover {
+    transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+/* === Mobile Nav Link Tap Animation === */
+@media (max-width: 991px) {
+    .nav-link {
+        border-radius: 8px; /* Gives the links rounded corners */
+        transition: transform 0.2s ease, background-color 0.2s ease; /* Smooth transition for the effect */
+    }
+
+    .nav-link:active {
+        /* This is the state when a user is actively tapping the link */
+        transform: scale(0.98); /* Slightly shrinks the link */
+        background-color: rgba(0, 0, 0, 0.05); /* Adds a subtle background color */
+    }
+    
+    [data-theme="dark"] .nav-link:active {
+        /* Dark mode version of the tap effect */
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.theme-toggle i, .theme-toggle-mobile i {
+    transition: transform 0.5s ease, color 0.3s ease, opacity 0.3s ease;
+}

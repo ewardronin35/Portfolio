@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     initProfileSlider();
     initThemeToggle();
+    initContactForm();
 
 AOS.init({
     duration: 800,
@@ -233,48 +234,6 @@ particlesJS('particles-js', {
         "retina_detect": true
     });
 
-    // ================== Project Slider Logic ==================
-    const slider = document.querySelector('.slider-container');
-    if (slider) {
-        const slides = document.querySelector('.slides');
-        const slideItems = document.querySelectorAll('.slide');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-
-        let currentIndex = 0;
-        const slideCount = slideItems.length;
-
-        function updateSliderPosition() {
-            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
-
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % slideCount;
-            updateSliderPosition();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + slideCount) % slideCount;
-            updateSliderPosition();
-        });
-
-        // Optional: Auto-slide
-        let autoSlideInterval = setInterval(() => {
-            nextBtn.click();
-        }, 5000); // Change slide every 5 seconds
-
-        // Pause on hover
-        slider.addEventListener('mouseenter', () => {
-            clearInterval(autoSlideInterval);
-        });
-
-        slider.addEventListener('mouseleave', () => {
-            autoSlideInterval = setInterval(() => {
-                nextBtn.click();
-            }, 5000);
-        });
-    }
-
     async function fetchProjects() {
         try {
             const response = await fetch('projects.json');
@@ -484,42 +443,11 @@ function handleScroll() {
           prevEl: '.swiper-button-prev',
         },
     });
-const themeToggle = document.querySelector('.theme-toggle');
-const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-// Check for saved theme preference or default to user's system preference
-const currentTheme = localStorage.getItem('theme') || 
-    (prefersDarkScheme.matches ? 'dark' : 'light');
-
-// Set initial theme
-document.documentElement.setAttribute('data-theme', currentTheme);
-updateThemeIcon(currentTheme);
-
-// Theme toggle handler
-themeToggle.addEventListener('click', () => {
-    const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' 
-        ? 'light' 
-        : 'dark';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
-});
-function updateTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    
-    // Add transition class
-    document.body.classList.add('theme-transition');
-    setTimeout(() => {
-        document.body.classList.remove('theme-transition');
-    }, 300);
-}
 
 function initThemeToggle() {
     const themeToggles = document.querySelectorAll('.theme-toggle, .theme-toggle-mobile');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     // Get saved theme or use system preference
     const savedTheme = localStorage.getItem('theme');
     const systemTheme = prefersDarkScheme.matches ? 'dark' : 'light';
@@ -563,6 +491,22 @@ function initThemeToggle() {
     });
 }
 
+function initContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        
+        const subject = `Message from ${name} via your portfolio`;
+        const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+        
+        window.location.href = `mailto:eduardroland20@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+}
+
 // Add scroll handler for navbar
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
@@ -572,29 +516,3 @@ window.addEventListener('scroll', () => {
         navbar.classList.remove('scrolled');
     }
 });
-function updateThemeIcon(theme) {
-    const icon = themeToggle.querySelector('i');
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-}
-function checkTime() {
-    const hour = new Date().getHours();
-    // Light theme between 6 AM and 5 PM (17:00)
-    const shouldBeLightTheme = hour >= 6 && hour < 17;
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    
-    if (shouldBeLightTheme && currentTheme !== 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        updateThemeIcon('light');
-    } else if (!shouldBeLightTheme && currentTheme !== 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        updateThemeIcon('dark');
-    }
-}
-
-// Check time on page load
-checkTime();
-
-// Check time every minute
-setInterval(checkTime, 60000);
